@@ -8,8 +8,16 @@ from dataset import create_loader
 testloader = create_loader(train=False)
 
 classes = (
-    'plane', 'car', 'bird', 'cat',
-    'deer', 'dog', 'frog', 'horse', 'ship', 'truck'
+    'plane',
+    'car',
+    'bird',
+    'cat',
+    'deer',
+    'dog',
+    'frog',
+    'horse',
+    'ship',
+    'truck',
 )
 
 

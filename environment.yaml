@@ -1,0 +1,14 @@
+name: tiny-torch
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pytorch
+  - tensorboard
+  - cudatoolkit
+  - numpy
+  - matplotlib
+  - tqdm
+  - pre-commit
+  - pytest
+  - pytest-cov
