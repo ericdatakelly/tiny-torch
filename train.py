@@ -42,6 +42,11 @@ for epoch in range(n_epochs):
 print('Finished Training')
 
 # Save model
-model_path = Path('output', 'model.pth')
+output_path = Path('output')
+model_path = output_path / 'model.pth'
+
+if not output_path.exists():
+    output_path.mkdir()
+
 torch.save(model.state_dict(), model_path)
 print(f'Model saved as {model_path}')
