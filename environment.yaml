@@ -2,13 +2,14 @@ name: tiny-torch
 channels:
   - conda-forge
 dependencies:
-  - python
-  - pytorch
-  - tensorboard
   - cudatoolkit
-  - numpy
+  - ipykernel
   - matplotlib
-  - tqdm
+  - numpy
   - pre-commit
   - pytest
   - pytest-cov
+  - python
+  - pytorch
+  - tensorboard
+  - tqdm
