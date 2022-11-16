@@ -1,0 +1,10 @@
+kind: WorkflowTemplate
+metadata:
+  name: evaluate-template
+spec:
+  templates:
+    - name: evaluate-template
+      container:
+        image: unknown/image
+        command: ["python", "evaluate.py"]
+        # How to start conda env?

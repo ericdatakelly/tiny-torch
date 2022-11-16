@@ -1,0 +1,25 @@
+kind: Workflow
+metadata:
+  generateName: train-eval-vis
+spec:
+  entrypoint: pipeline
+  templates:
+  - name: pipeline
+    dag:
+      tasks:
+        - name: train
+          template: train-template
+        - name: evaluate
+          template: evaluate-template
+          dependencies: [train]
+          arguments:
+            artifacts:
+              - name: train-model
+                from: "{{tasks.train.outputs.artifacts.model-pth}}"
+        - name: visualize
+          template: visualize-template
+          dependencies: [train]
+          arguments:
+            artifacts:
+              - name: train-model
+                from: "{{tasks.train.outputs.artifacts.model-pth}}"

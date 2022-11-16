@@ -1,0 +1,10 @@
+kind: WorkflowTemplate
+metadata:
+  name: visualize-template
+spec:
+  templates:
+    - name: visualize-template
+      container:
+        image: unknown/image
+        command: ["python", "visualize.py"]
+        # How to start conda env?

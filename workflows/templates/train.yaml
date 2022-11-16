@@ -1,0 +1,14 @@
+kind: WorkflowTemplate
+metadata:
+  name: train-template
+spec:
+  templates:
+    - name: train-template
+      container:
+        image: unknown/image
+        command: ["python", "train.py"]
+        # How to start conda env?
+      outputs:
+        artifacts:
+          - name: model
+            path: output/model.joblib
