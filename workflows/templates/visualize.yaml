@@ -5,5 +5,5 @@ spec:
   templates:
     - name: visualize-template
       container:
-        image: ignite
+        image: ericdatakelly/nebari-workflow
         command: ["visualize.py"]

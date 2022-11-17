@@ -5,7 +5,7 @@ spec:
   templates:
     - name: main-template
       container:
-        image: ignite
+        image: ericdatakelly/nebari-workflow
         command: ["main.py"]
       outputs:
         artifacts:
