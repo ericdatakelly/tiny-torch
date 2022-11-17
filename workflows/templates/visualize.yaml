@@ -5,6 +5,5 @@ spec:
   templates:
     - name: visualize-template
       container:
-        image: unknown/image
-        command: ["python", "visualize.py"]
-        # How to start conda env?
+        image: ignite
+        command: ["visualize.py"]

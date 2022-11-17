@@ -2,22 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torchvision
 
-from dataset import create_loader
-
-testloader = create_loader(train=False)
-
-classes = (
-    'plane',
-    'car',
-    'bird',
-    'cat',
-    'deer',
-    'dog',
-    'frog',
-    'horse',
-    'ship',
-    'truck',
-)
+from data import setup_data
+from utils import setup_parser
 
 
 def imshow(img):
@@ -28,11 +14,29 @@ def imshow(img):
     plt.show()
 
 
-# get some random training images
-dataiter = iter(testloader)
-images, labels = next(dataiter)
+def view_examples():
+    config = setup_parser().parse_args()
 
-# show images
-imshow(torchvision.utils.make_grid(images))
-# print labels
-print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
+    _, dataloader_eval = setup_data(config)
+
+    classes = (
+        'plane',
+        'car',
+        'bird',
+        'cat',
+        'deer',
+        'dog',
+        'frog',
+        'horse',
+        'ship',
+        'truck',
+    )
+
+    # get some random training images
+    dataiter = iter(dataloader_eval)
+    images, labels = next(dataiter)
+
+    # show images
+    imshow(torchvision.utils.make_grid(images))
+    # print labels
+    print(' '.join('%5s' % classes[labels[j]] for j in range(4)))

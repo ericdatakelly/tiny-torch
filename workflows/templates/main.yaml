@@ -1,13 +1,12 @@
 kind: WorkflowTemplate
 metadata:
-  name: train-template
+  name: main-template
 spec:
   templates:
-    - name: train-template
+    - name: main-template
       container:
-        image: unknown/image
-        command: ["python", "train.py"]
-        # How to start conda env?
+        image: ignite
+        command: ["main.py"]
       outputs:
         artifacts:
           - name: model

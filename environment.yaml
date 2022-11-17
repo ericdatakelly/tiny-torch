@@ -1,15 +1,13 @@
-name: tiny-torch
+name: ignite-env
 channels:
   - conda-forge
 dependencies:
-  - cudatoolkit
   - ipykernel
   - matplotlib
-  - numpy
   - pre-commit
-  - pytest
-  - pytest-cov
   - python
-  - pytorch
+  - pytorch>=1.10.2
+  - pytorch-ignite>=0.4.8
+  - pyyaml
   - tensorboard
-  - tqdm
+  - torchvision>=0.11.3

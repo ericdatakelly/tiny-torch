@@ -1,2 +1,4 @@
 output/
 data/
+logs/
+cifar-10-batches-py/

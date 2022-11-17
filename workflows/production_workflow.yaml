@@ -7,19 +7,19 @@ spec:
   - name: pipeline
     dag:
       tasks:
-        - name: train
-          template: train-template
+        - name: main
+          template: main-template
         - name: evaluate
           template: evaluate-template
           dependencies: [train]
           arguments:
             artifacts:
-              - name: train-model
-                from: "{{tasks.train.outputs.artifacts.model-pth}}"
+              - name: model
+                from: "{{tasks.main.outputs.artifacts.model-pt}}"
         - name: visualize
           template: visualize-template
           dependencies: [train]
           arguments:
             artifacts:
-              - name: train-model
-                from: "{{tasks.train.outputs.artifacts.model-pth}}"
+              - name: model
+                from: "{{tasks.train.outputs.artifacts.model-pt}}"

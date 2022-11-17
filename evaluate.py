@@ -2,15 +2,23 @@ from pathlib import Path
 
 import torch
 
-from dataset import create_loader
-from model import Net
+from data import setup_data
+from models import setup_model
+from utils import setup_parser
 
 
-def evaluate(model, loader):
+def evaluate(model_path):
+    config = setup_parser().parse_args()
+
+    _, dataloader_eval = setup_data(config)
+
+    model = setup_model(config.model)
+    model.load_state_dict(torch.load(model_path))
+
     correct = 0
     total = 0
     with torch.no_grad():
-        for batch in loader:
+        for batch in dataloader_eval:
             images, labels = batch
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
@@ -18,12 +26,3 @@ def evaluate(model, loader):
             correct += (predicted == labels).sum().item()
 
     print('Accuracy of the network : %d %%' % (100 * correct / total))
-
-
-testloader = create_loader(train=False)
-
-model_path = Path('output', 'model.pth')
-model = Net()
-model.load_state_dict(torch.load(model_path))
-
-evaluate(model, testloader)
