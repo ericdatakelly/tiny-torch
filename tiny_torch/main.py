@@ -6,12 +6,12 @@ import yaml
 from ignite.engine import Events
 from ignite.metrics import Accuracy, Loss
 from ignite.utils import manual_seed
-from models import setup_model
 from torch import nn, optim
-from trainers import setup_evaluator, setup_trainer
-from utils import *
 
 from tiny_torch.data import setup_data
+from tiny_torch.models import setup_model
+from tiny_torch.trainers import setup_evaluator, setup_trainer
+from tiny_torch.utils import *
 
 
 def run(local_rank: int, config: Any):
