@@ -5,6 +5,7 @@ dependencies:
   - hera-workflows
   - ipykernel
   - matplotlib
+  - pip
   - pre-commit
   - python
   - pytorch>=1.10.2
@@ -12,3 +13,5 @@ dependencies:
   - pyyaml
   - tensorboard
   - torchvision>=0.11.3
+  - pip:
+      - python-dotenv
