@@ -3,7 +3,6 @@ from typing import Any
 
 import ignite.distributed as idist
 import yaml
-from data import setup_data
 from ignite.engine import Events
 from ignite.metrics import Accuracy, Loss
 from ignite.utils import manual_seed
@@ -11,6 +10,8 @@ from models import setup_model
 from torch import nn, optim
 from trainers import setup_evaluator, setup_trainer
 from utils import *
+
+from tiny_torch.data import setup_data
 
 
 def run(local_rank: int, config: Any):
