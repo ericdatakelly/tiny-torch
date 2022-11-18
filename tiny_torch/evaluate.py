@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import torch
-
 from data import setup_data
 from models import setup_model
 from utils import setup_parser
