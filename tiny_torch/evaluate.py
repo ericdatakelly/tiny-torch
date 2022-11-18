@@ -1,9 +1,10 @@
 from pathlib import Path
 
 import torch
-from data import setup_data
-from models import setup_model
-from utils import setup_parser
+
+from tiny_torch.data import setup_data
+from tiny_torch.models import setup_model
+from tiny_torch.utils import setup_parser
 
 
 def evaluate(model_path):

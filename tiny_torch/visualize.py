@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import torchvision
-from data import setup_data
-from utils import setup_parser
+
+from tiny_torch.data import setup_data
+from tiny_torch.utils import setup_parser
 
 
 def imshow(img):
