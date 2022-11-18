@@ -2,6 +2,7 @@ name: ignite-env
 channels:
   - conda-forge
 dependencies:
+  - hera-workflows
   - ipykernel
   - matplotlib
   - pre-commit
