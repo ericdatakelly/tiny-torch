@@ -11,15 +11,33 @@ spec:
           template: main-template
         - name: evaluate
           template: evaluate-template
-          dependencies: [train]
+          dependencies:
+            - main
           arguments:
             artifacts:
               - name: model
                 from: "{{tasks.main.outputs.artifacts.model-pt}}"
         - name: visualize
           template: visualize-template
-          dependencies: [train]
+          dependencies:
+            - main
           arguments:
             artifacts:
               - name: model
                 from: "{{tasks.train.outputs.artifacts.model-pt}}"
+  - name: main-template
+    container:
+      image: ericdatakelly/nebari-workflow
+      command: ["main.py"]
+    outputs:
+      artifacts:
+        - name: model
+          path: output/model.joblib
+  - name: evaluate-template
+    container:
+      image: ericdatakelly/nebari-workflow
+      command: ["evaluate.py"]
+  - name: visualize-template
+    container:
+      image: ericdatakelly/nebari-workflow
+      command: [ "visualize.py" ]
