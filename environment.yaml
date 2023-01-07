@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - hera-workflows
+  - ignite
   - ipykernel
   - matplotlib
   - pip
@@ -15,3 +16,4 @@ dependencies:
   - torchvision>=0.11.3
   - pip:
       - python-dotenv
+      - -e .

@@ -1,25 +1,25 @@
-FROM condaforge/mambaforge
+#FROM condaforge/mambaforge
+FROM continuumio/miniconda3
 
-#VOLUME /tiny-torch
+# Get the modeling repo
+RUN git clone https://github.com/ericdatakelly/tiny-torch.git && cd tiny-torch
 
-WORKDIR /app
+# Set the working directory
+WORKDIR /tiny-torch
 
 # Create the environment:
-COPY environment.yaml .
+RUN conda install -c conda-forge mamba
 RUN mamba env create -f environment.yaml
 
 # Make RUN commands use the new environment:
 RUN echo "conda activate ignite-env" >> ~/.bashrc
 SHELL ["conda", "run", "-n", "ignite-env", "/bin/bash", "--login", "-c"]
 
-## Test that this is working
-#RUN python -c "import yaml"
+# Install the local project into the conda env
+RUN pip install -e .
 
-RUN git clone https://github.com/ericdatakelly/tiny-torch.git && cd tiny-torch
+# Be sure this file can be executed
+RUN chmod +x entrypoint.sh
 
-
-# The code to run when container is started:
-COPY entrypoint.sh ./
+# Run this code when container is started:
 ENTRYPOINT ["./entrypoint.sh"]
-
-#RUN python tiny_torch/main.py
