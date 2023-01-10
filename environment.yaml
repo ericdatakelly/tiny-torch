@@ -9,11 +9,10 @@ dependencies:
   - pre-commit
   - python
   - pytorch>=1.10.2
-  - pytorch-ignite>=0.4.8
   - pyyaml
   - tensorboard
   - torchvision>=0.11.3
   - pip:
       - python-dotenv
-      - pytorch-ignite
+      - pytorch-ignite>=0.4.8
       - -e .
