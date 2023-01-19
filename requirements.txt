@@ -1,7 +1,6 @@
 hera-workflows
 ipykernel
 matplotlib
-pre-commit
 pytorch>=1.10.2
 pyyaml
 tensorboard
