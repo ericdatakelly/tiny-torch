@@ -12,13 +12,8 @@ VOLUME /tiny-torch/logs
 # Set the working directory
 WORKDIR /tiny-torch
 
-## Create the environment:
-RUN conda install -c conda-forge mamba
-RUN mamba env create -f environment.yaml
+# Install required packages
+RUN pip install -r requirements.txt
 
-# Make RUN commands use the new environment:
-RUN echo "conda activate ignite-env" >> ~/.bashrc
-SHELL ["conda", "run", "-n", "ignite-env", "/bin/bash", "--login", "-c"]
-
-# Install the local project into the conda env
-RUN pip install -e .
+# Install this package too
+RUN pip install .
