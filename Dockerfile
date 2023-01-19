@@ -19,7 +19,7 @@ VOLUME /tiny-torch/logs
 WORKDIR /tiny-torch
 
 # Install required packages
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Install this package too
-RUN pip install .
+RUN pip3 install .
