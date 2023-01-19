@@ -1,9 +1,0 @@
-hera-workflows
-ipykernel
-matplotlib
-torch>=1.10.2
-pyyaml
-tensorboard
-torchvision>=0.11.3
-python-dotenv
-pytorch-ignite>=0.4.8
