@@ -1,0 +1,9 @@
+# Run files using the base container
+
+FROM tinytorch_base
+
+# Be sure this file can be executed
+RUN chmod +x entrypoint.sh
+
+# Run this code when container is started:
+ENTRYPOINT ["./entrypoint.sh"]
