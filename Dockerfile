@@ -2,6 +2,9 @@
 
 FROM continuumio/miniconda3
 
+# Make the directory to ensure permissions for current user
+RUN mkdir tiny-torch
+
 # Get the modeling repo
 RUN git clone https://github.com/ericdatakelly/tiny-torch.git && cd tiny-torch
 
