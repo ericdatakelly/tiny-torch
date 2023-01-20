@@ -18,7 +18,11 @@ from ignite.handlers.time_limit import TimeLimit
 from ignite.utils import setup_logger
 
 
-def setup_parser(config_path: str = 'config.yaml'):
+def setup_parser(config_path: str | Path = None):
+    if not config_path:
+        current_dir = Path().absolute()
+        config_path = Path(current_dir.parent.parent, "config.yaml")
+
     with open(config_path, "r") as f:
         config = yaml.safe_load(f.read())
 

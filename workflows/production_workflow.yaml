@@ -28,7 +28,7 @@ spec:
   - name: main-template
     container:
       image: ericdatakelly/nebari-workflow2
-      command: ['python', 'main.py']
+      command: ['python', '/tiny-torch/tiny_torch/main.py']
     outputs:
       artifacts:
         - name: model-pt
