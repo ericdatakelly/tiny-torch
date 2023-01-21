@@ -1,0 +1,32 @@
+kind: Workflow
+metadata:
+  generateName: test-fileshare
+spec:
+  entrypoint: pipeline
+  templates:
+  - name: pipeline
+    dag:
+      tasks:
+        - name: fileshare-write
+          template: fileshare-write-template
+        - name: fileshare-read
+          template: fileshare-read-template
+          dependencies:
+            - fileshare-write
+          arguments:
+            artifacts:
+              - name: data-test
+                from: '{{tasks.fileshare-write.outputs.artifacts.data-test}}'
+
+  - name: fileshare-write-template
+    container:
+      image: ericdatakelly/nebari-workflow2
+      command: ['python', '/tiny-torch/file_share_test_write.py']
+    outputs:
+      artifacts:
+        - name: data-test
+          path: '/tmp/data_test.txt'
+  - name: fileshare-read-template
+    container:
+      image: ericdatakelly/nebari-workflow2
+      command: ['python', '/tiny-torch/file_share_test_read.py']

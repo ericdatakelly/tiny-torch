@@ -9,22 +9,22 @@ spec:
       tasks:
         - name: main
           template: main-template
-#        - name: evaluate
-#          template: evaluate-template
-#          dependencies:
-#            - main
-#          arguments:
-#            artifacts:
-#              - name: model
-#                from: '{{tasks.main.outputs.artifacts.model-pt}}'
-#        - name: visualize
-#          template: visualize-template
-#          dependencies:
-#            - main
-#          arguments:
-#            artifacts:
-#              - name: model
-#                from: '{{tasks.main.outputs.artifacts.model-pt}}'
+        - name: evaluate
+          template: evaluate-template
+          dependencies:
+            - main
+          arguments:
+            artifacts:
+              - name: model
+                from: '{{tasks.main.outputs.artifacts.model-pt}}'
+        - name: visualize
+          template: visualize-template
+          dependencies:
+            - main
+          arguments:
+            artifacts:
+              - name: model
+                from: '{{tasks.main.outputs.artifacts.model-pt}}'
   - name: main-template
     container:
       image: ericdatakelly/nebari-workflow2
@@ -32,12 +32,12 @@ spec:
     outputs:
       artifacts:
         - name: model-pt
-          path: output/model.pt
-#  - name: evaluate-template
-#    container:
-#      image: ericdatakelly/nebari-workflow2
-#      command: ['python', 'evaluate.py']
-#  - name: visualize-template
-#    container:
-#      image: ericdatakelly/nebari-workflow2
-#      command: ['python', 'visualize.py' ]
+          path: '/tmp/model.pt'
+  - name: evaluate-template
+    container:
+      image: ericdatakelly/nebari-workflow2
+      command: ['python', '/tiny-torch/tiny_torch/evaluate.py']
+  - name: visualize-template
+    container:
+      image: ericdatakelly/nebari-workflow2
+      command: ['python', '/tiny-torch/tiny_torch/visualize.py' ]
