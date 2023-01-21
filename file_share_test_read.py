@@ -1,4 +1,4 @@
-with open('/tmp/data_test.txt', 'r') as f:
+with open('artifact_test/data_test.txt.tgz', 'r') as f:
     data = f.read()
 
 print(data)

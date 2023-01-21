@@ -5,6 +5,20 @@ spec:
   entrypoint: pipeline
   templates:
   - name: pipeline
+    inputs:
+      artifacts:
+        - name: data-test
+          path: artifact_test/data_test.txt
+          s3:
+            endpoint: s3.amazonaws.com
+            bucket: tiny-torch
+            key: artifact_test/data_test.txt.tgz
+            accessKeySecret:
+              name: my-aws-s3-credentials
+              key: accessKey
+            secretKeySecret:
+              name: my-aws-s3-credentials
+              key: secretKey
     dag:
       tasks:
         - name: fileshare-write
@@ -17,7 +31,6 @@ spec:
             artifacts:
               - name: data-test
                 from: '{{tasks.fileshare-write.outputs.artifacts.data-test}}'
-
   - name: fileshare-write-template
     container:
       image: ericdatakelly/nebari-workflow2
@@ -25,7 +38,7 @@ spec:
     outputs:
       artifacts:
         - name: data-test
-          path: '/tmp/data_test.txt'
+          path: 'artifact_test/data_test.txt'
   - name: fileshare-read-template
     container:
       image: ericdatakelly/nebari-workflow2
