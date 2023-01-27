@@ -1,4 +1,5 @@
-with open('artifact_test/data_test.txt.tgz', 'r') as f:
-    data = f.read()
+import boto3
 
-print(data)
+s3 = boto3.client('s3')
+with open('data_test_download.txt', 'wb') as f:
+    s3.download_fileobj('tiny-torch', 'artifact_test/data_test.txt', f)
