@@ -114,7 +114,7 @@ def run(local_rank: int, config: Any):
 
 # main entrypoint
 def main():
-    config = setup_parser().parse_args()
+    config = setup_parser(config_path='/home/ekelly@quansight.com/tiny-torch/config.yaml').parse_args()
     with idist.Parallel(config.backend) as p:
         p.run(run, config=config)
 
