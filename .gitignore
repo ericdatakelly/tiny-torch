@@ -2,4 +2,7 @@ output/
 data/
 logs/
 cifar-10-batches-py/
+cifar-10-python.tar.gz
 .env
+tiny_torch.egg-info/
+tiny_torch/__pycache__/
