@@ -12,7 +12,7 @@ This is the image classification template by Code-Generator using `resnet18` mod
 ### Run on single GPU
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py
+CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py configs/resnet152.yaml
 ```
 
 ### Run on single node and multiple GPUs
