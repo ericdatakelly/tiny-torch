@@ -24,6 +24,8 @@ torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet152.yaml --backend=
 
 #### Computational profiling with Tensorboard
 
+Be sure `torch_tb_profiler` is installed in the environment and use the profiling config file.
+
 ```bash
 torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet152.yaml --backend=nccl
 ```
