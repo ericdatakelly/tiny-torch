@@ -1,18 +1,19 @@
-name: ignite-env
+name: torch-demo
 channels:
   - conda-forge
 dependencies:
-  - hera-workflows
   - ipykernel
+  - ipywidgets
   - matplotlib
   - pip
   - pre-commit
   - python
-  - pytorch>=1.10.2
+  - pytorch
+  - pytorch-gpu
   - pyyaml
   - tensorboard
-  - torchvision>=0.11.3
+  - torchvision
   - pip:
       - python-dotenv
-      - pytorch-ignite>=0.4.8
-      - -e .
+      - pytorch-ignite
+      - torch_tb_profiler
