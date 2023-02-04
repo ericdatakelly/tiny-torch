@@ -6,10 +6,10 @@ import yaml
 from ignite.engine import Events
 from ignite.metrics import Accuracy, Loss
 from ignite.utils import manual_seed
-from torch import nn, optim
+from torch import nn
 
 from tiny_torch.data import setup_data
-from tiny_torch.models import setup_model
+from tiny_torch.models import setup_model, setup_optim
 from tiny_torch.trainers import setup_evaluator, setup_trainer
 from tiny_torch.utils import *
 
@@ -29,7 +29,7 @@ def run(local_rank: int, config: Any):
     # model, optimizer, loss function, device
     device = idist.device()
     model = idist.auto_model(setup_model(config.model))
-    optimizer = idist.auto_optim(optim.Adam(model.parameters(), lr=config.lr))
+    optimizer = idist.auto_optim(setup_optim(config.optimizer, model.parameters(), lr=config.lr))
     loss_fn = nn.CrossEntropyLoss().to(device=device)
 
     # trainer and evaluator
@@ -63,7 +63,7 @@ def run(local_rank: int, config: Any):
     )
     # experiment tracking
     if rank == 0:
-        exp_logger = setup_exp_logging(config, trainer, optimizer, evaluator)
+        tb_logger = setup_exp_logging(config, trainer, optimizer, evaluator)
 
     # print metrics to the stderr
     # with `add_event_handler` API
@@ -74,30 +74,51 @@ def run(local_rank: int, config: Any):
         tag="train",
     )
 
-    # run evaluation at every training epoch end
-    # with shortcut `on` decorator API and
-    # print metrics to the stderr
-    # again with `add_event_handler` API
-    # for evaluation stats
-    @trainer.on(Events.EPOCH_COMPLETED(every=1))
-    def _():
-        evaluator.run(dataloader_eval, epoch_length=config.eval_epoch_length)
-        log_metrics(evaluator, "eval")
+    prof = None
+    if getattr(config, "profile", False):
+        prof = torch.profiler.profile(
+            schedule=torch.profiler.schedule(wait=5, warmup=5, active=10, repeat=2),
+            on_trace_ready=torch.profiler.tensorboard_trace_handler(config.output_dir),
+            record_shapes=True,
+            profile_memory=True,
+            with_stack=True
+        )
+
+    if prof is not None:
+        # run evaluation at every training epoch end
+        # with shortcut `on` decorator API and
+        # print metrics to the stderr
+        # again with `add_event_handler` API
+        # for evaluation stats
+        @trainer.on(Events.EPOCH_COMPLETED(every=2))
+        def _():
+            evaluator.run(dataloader_eval)
+            log_metrics(evaluator, "eval")
 
     # let's try to run evaluation first as a sanity check
     @trainer.on(Events.STARTED)
     def _():
-        evaluator.run(dataloader_eval, epoch_length=config.eval_epoch_length)
+        evaluator.run(dataloader_eval)
 
-    # setup if done. let's run the training
+    if prof is not None:
+        prof.start()
+
+        @trainer.on(Events.ITERATION_COMPLETED)
+        def _():
+            prof.step()
+
+    # setup is done. let's run the training
     trainer.run(
         dataloader_train,
         max_epochs=config.max_epochs,
-        epoch_length=config.train_epoch_length,
     )
+
+    if prof is not None:
+        prof.stop()
+
     # close logger
     if rank == 0:
-        exp_logger.close()
+        tb_logger.close()
 
     # show last checkpoint names
     logger.info(
@@ -109,12 +130,11 @@ def run(local_rank: int, config: Any):
         "Last evaluation checkpoint name - %s",
         ckpt_handler_eval.last_checkpoint,
     )
-    bp = 0
 
 
 # main entrypoint
 def main():
-    config = setup_parser().parse_args()
+    config = setup_config()
     with idist.Parallel(config.backend) as p:
         p.run(run, config=config)
 

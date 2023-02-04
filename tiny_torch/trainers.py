@@ -3,6 +3,7 @@ from typing import Any, Union
 import ignite.distributed as idist
 import torch
 from ignite.engine import DeterministicEngine, Engine, Events
+from ignite.metrics import Frequency
 from torch.cuda.amp import autocast
 from torch.nn import Module
 from torch.optim import Optimizer
@@ -32,13 +33,17 @@ def setup_trainer(
         optimizer.zero_grad()
 
         train_loss = loss.item()
+
         engine.state.metrics = {
-            "epoch": engine.state.epoch,
             "train_loss": train_loss,
+            "lr": optimizer.param_groups[0]["lr"]
         }
-        return {"train_loss": train_loss}
+        return {"train_loss": train_loss, "num_samples": len(samples)}
 
     trainer = Engine(train_function)
+
+    throughput_metric = Frequency(output_transform=lambda x: x['num_samples'])
+    throughput_metric.attach(trainer, name='throughput')
 
     # set epoch for distributed sampler
     @trainer.on(Events.EPOCH_STARTED)
