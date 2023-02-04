@@ -22,12 +22,14 @@ torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet152.yaml --backend=
 ```
 
 
-#### Profiling with Tensorboard
-
-```
-pip install torch_tb_profiler
-```
+#### Computational profiling with Tensorboard
 
 ```bash
 torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet152.yaml --backend=nccl
+```
+
+### Monitor model training with Tensorboard
+
+```bash
+tensorboard --port=8667 --logdir=tiny-torch/logs
 ```
