@@ -8,6 +8,8 @@ from ignite.metrics import Accuracy, Loss
 from ignite.utils import manual_seed
 from torch import nn, optim
 
+from ignite.contrib.handlers.tensorboard_logger import *
+
 from tiny_torch.data import setup_data
 from tiny_torch.models import setup_model
 from tiny_torch.trainers import setup_evaluator, setup_trainer
@@ -15,7 +17,6 @@ from tiny_torch.utils import *
 
 
 def run(local_rank: int, config: Any):
-
     # make a certain seed
     rank = idist.get_rank()
     manual_seed(config.seed + rank)
@@ -114,8 +115,16 @@ def run(local_rank: int, config: Any):
 
 # main entrypoint
 def main():
-    config = setup_parser().parse_args()
+    config = setup_parser('config.yaml').parse_args()
     with idist.Parallel(config.backend) as p:
+
+    # import torch.distributed as dist
+
+    # dist.init_process_group(backend="nccl")
+
+    # print(dist.get_rank(), dist.get_world_size())
+    # rank = idist.get_rank()
+    # print(f"\n\n{rank} {idist.get_world_size()}\n\n")
         p.run(run, config=config)
 
 
