@@ -30,8 +30,7 @@ Be sure `torch_tb_profiler` is installed in the environment and use the profilin
 torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet152.yaml --backend=nccl
 ```
 
-### Monitor model training with Tensorboard
-
 ```bash
 tensorboard --port=8667 --logdir=tiny-torch/logs
 ```
+In Nebari, navigate to `https://<your nebari domain>/user/<your username>/proxy/8667` to view Tensorboard.  Click on the PYTORCH_PROFILER tab.
