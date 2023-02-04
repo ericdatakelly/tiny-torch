@@ -12,7 +12,7 @@ This is the image classification template by Code-Generator using `resnet18` mod
 ### Run on single GPU
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py
+CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py configs/resnet152.yaml
 ```
 
 ### Run on single node and multiple GPUs
@@ -22,12 +22,15 @@ torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet152.yaml --backend=
 ```
 
 
-#### Profiling with Tensorboard
+#### Computational profiling with Tensorboard
 
-```
-pip install torch_tb_profiler
-```
+Be sure `torch_tb_profiler` is installed in the environment and use the profiling config file.
 
 ```bash
 torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet152.yaml --backend=nccl
 ```
+
+```bash
+tensorboard --port=8667 --logdir=tiny-torch/logs
+```
+In Nebari, navigate to `https://<your nebari domain>/user/<your username>/proxy/8667` to view Tensorboard.  Click on the PYTORCH_PROFILER tab.
