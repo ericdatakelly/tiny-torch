@@ -6,6 +6,18 @@ A small algorithm for exploring MLOps best practices.
 
 This is the image classification template by Code-Generator using `resnet18` model and `cifar10` dataset from TorchVision and training is powered by PyTorch and PyTorch-Ignite.
 
+## Installation
+
+Navigate to the `tiny-torch` directory, create a conda environment, and activate it.
+
+```bash
+conda env create -f environment.yaml
+```
+Install the library with pip.
+
+```bash
+pip install -e .
+```
 
 ## Usage
 
