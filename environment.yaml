@@ -1,19 +1,20 @@
 name: torch-demo
+# set CONDA_OVERRIDE_CUDA=11.8
 channels:
-  - conda-forge
+- conda-forge
+- nvidia
 dependencies:
-  - ipykernel
-  - ipywidgets
-  - matplotlib
-  - pip
-  - pre-commit
-  - python
-  - pytorch
-  - pytorch-gpu
-  - pyyaml
-  - tensorboard
-  - torchvision
-  - pip:
-      - python-dotenv
-      - pytorch-ignite
-      - torch_tb_profiler
+- ipykernel
+- ipywidgets
+- matplotlib
+- numpy
+- pre-commit
+- python
+- pytorch-gpu>=1.13.1
+- pyyaml
+- tensorboard
+- torchvision
+- python-dotenv
+- pytorch-ignite
+- pip:
+  - torch_tb_profiler
