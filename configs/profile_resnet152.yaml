@@ -16,7 +16,7 @@ num_workers: 4
 model: resnet152
 
 # Training
-max_epochs: 2
+max_epochs: 30
 optimizer: Adam
 lr: 0.001
 filename_prefix: training
