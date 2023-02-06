@@ -29,7 +29,9 @@ def run(local_rank: int, config: Any):
     # model, optimizer, loss function, device
     device = idist.device()
     model = idist.auto_model(setup_model(config.model))
-    optimizer = idist.auto_optim(setup_optim(config.optimizer, model.parameters(), lr=config.lr))
+    optimizer = idist.auto_optim(
+        setup_optim(config.optimizer, model.parameters(), lr=config.lr)
+    )
     loss_fn = nn.CrossEntropyLoss().to(device=device)
 
     # trainer and evaluator
@@ -77,11 +79,11 @@ def run(local_rank: int, config: Any):
     prof = None
     if getattr(config, "profile", False):
         prof = torch.profiler.profile(
-            schedule=torch.profiler.schedule(wait=5, warmup=5, active=10, repeat=2),
+            schedule=torch.profiler.schedule(wait=5, warmup=5, active=5, repeat=2),
             on_trace_ready=torch.profiler.tensorboard_trace_handler(config.output_dir),
             record_shapes=True,
             profile_memory=True,
-            with_stack=True
+            with_stack=True,
         )
 
     if prof is not None:
