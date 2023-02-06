@@ -4,7 +4,7 @@ A small algorithm for exploring MLOps best practices.
 
 [![Code-Generator](https://badgen.net/badge/Template%20by/Code-Generator/ee4c2c?labelColor=eaa700)](https://github.com/pytorch-ignite/code-generator)
 
-This is the image classification template by Code-Generator using `resnet18` model and `cifar10` dataset from TorchVision and training is powered by PyTorch and PyTorch-Ignite.
+This is the image classification template by Code-Generator using a `resnet` model and the `cifar10` dataset from TorchVision, and training is powered by PyTorch and PyTorch-Ignite.
 
 ## Installation
 
@@ -24,13 +24,13 @@ pip install -e .
 ### Run on single GPU
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py configs/resnet152.yaml
+CUDA_VISIBLE_DEVICES=0 python tiny_torch/main.py configs/resnet50.yaml
 ```
 
 ### Run on single node and multiple GPUs
 
 ```bash
-torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet152.yaml --backend=nccl
+torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet50.yaml --backend=nccl
 ```
 
 
@@ -39,7 +39,7 @@ torchrun --nproc_per_node=2 tiny_torch/main.py configs/resnet152.yaml --backend=
 Be sure `torch_tb_profiler` is installed in the environment and use the profiling config file.
 
 ```bash
-torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet152.yaml --backend=nccl
+torchrun --nproc_per_node=2 tiny_torch/main.py configs/profile_resnet50.yaml --backend=nccl
 ```
 From the `tiny-torch` directory, start Tensorboard.
 
