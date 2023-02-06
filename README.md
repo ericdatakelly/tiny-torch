@@ -46,4 +46,4 @@ From the `tiny-torch` directory, start Tensorboard.
 ```bash
 tensorboard --port=8667 --logdir=logs
 ```
-In Nebari, navigate to `https://<your nebari domain>/user/<your username>/proxy/8667` to view Tensorboard.  Click on the PYTORCH_PROFILER tab.
+In Nebari, navigate to `https://<your nebari domain>/user/<your username>/proxy/8667/` (include the trailing slash) to view Tensorboard.  Click on the PYTORCH_PROFILER tab.
